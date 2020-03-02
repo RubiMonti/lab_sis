@@ -20,22 +20,16 @@ else
 	fi
 fi
 
-#Dos opciones:
+echo $SUF
+echo calvooo
 
-#ls -lRa para ver los archivos junto con sus permisos pero habria que ver un amanera de filtrarlos para dejar solo los que son ejecutables
-
-#find -type f para ver todos los archivos, pero habria que hallar una manera de ver sus permisos
-
-for file in $(find $1 -type f)
+for file in $(find $1 -perm /111 -type f)
 do
-	mod=$(echo $file | rev | cut -f1 -d '/' | rev)
+	echo file = $file	
+	mod=$(echo $file | rev | sed -E 's/[a-zA-Z]*\.//' | rev)
+	mod=$(echo $mod$SUF)
 	echo mod = $mod
-
-	echo calvo
-	echo $file
-	echo $mod
-	if (test -x $mod)
-	then
-		echo siii #quitar la extension y meter la otra
-	fi
+	mv $file $mod
 done
+
+echo calvoooo
